@@ -524,8 +524,8 @@
 									"});",
 									"",
 									"",
-									"pm.test(\"Response time is less than 4000ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"pm.test(\"Response time is less than 3900ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(3900);",
 									"});",
 									"",
 									""
@@ -1649,8 +1649,8 @@
 								"id": "b6eaa942-c0c5-4068-9b24-1352cc4bb9f1",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
-									"pm.test(\"Response time is less than 4500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(450);",
+									"pm.test(\"Response time is less than 550ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(550);",
 									"});",
 									"",
 									"postman.setEnvironmentVariable(\"fieldId\", jsonData.content[0].fields[0].fieldId);",
