@@ -524,8 +524,8 @@
 									"});",
 									"",
 									"",
-									"pm.test(\"Response time is less than 3500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(3500);",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
 									"});",
 									"",
 									""
@@ -1096,8 +1096,8 @@
 									"",
 									"postman.setEnvironmentVariable(\"fieldNodeId\", jsonData.content.fieldNodeId);",
 									"",
-									"pm.test(\"Response time is less than 600ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(600);",
+									"pm.test(\"Response time is less than 650ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(650);",
 									"});",
 									"",
 									"pm.test(\"Status code is 200\", function () {",
@@ -1294,8 +1294,8 @@
 								"id": "11a88249-4320-40ab-9e31-fc2e9ba9badb",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
-									"pm.test(\"Response time is less than 1400ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(1400);",
+									"pm.test(\"Response time is less than 20000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});",
 									"",
 									"pm.test(\"Status code is 200\", function() {",
@@ -2604,7 +2604,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"soilZonesGeoJson\": {\n        \"type\": \"FeatureCollection\",\n        \"features\": [\n            {\n                \"geometry\": {\n                    \"type\": \"MultiPolygon\",\n                    \"coordinates\": {{soilZonescoordinates0}}\n                },\n                \"type\": \"Feature\",\n                \"properties\": {\n                    \"mukey\": null\n                }\n            },\n            {\n                \"geometry\": {\n                    \"type\": \"MultiPolygon\",\n                    \"coordinates\": {{soilZonescoordinates1}}\n                },\n                \"type\": \"Feature\",\n                \"properties\": {\n                    \"mukey\": null\n                }\n            }\n        ]\n    },\n    \"cropZonesGeoJson\": {\n        \"type\": \"FeatureCollection\",\n        \"features\": [\n            {\n                \"geometry\": {\n                    \"type\": \"MultiPolygon\",\n                    \"coordinates\": {{cropZonesGeoJson0}}\n                },\n                \"type\": \"Feature\",\n                \"properties\": {\n                    \"cropId\": 2,\n                    \"plantingDate\": 0,\n                    \"emergenceDate\": 0,\n                    \"center\": [\n                        34.85824472392706,\n                        32.27800012267532\n                    ],\n                    \"userGrowthToMaturity\": 0,\n                    \"userCropVariety\": null\n                }\n            },\n            {\n                \"geometry\": {\n                    \"type\": \"MultiPolygon\",\n                    \"coordinates\": {{cropZonesGeoJson1}}\n                },\n                \"type\": \"Feature\",\n                \"properties\": {\n                    \"cropId\": 3,\n                    \"plantingDate\": 0,\n                    \"emergenceDate\": 0,\n                    \"center\": [\n                        34.86282577079935,\n                        32.276988859144176\n                    ],\n                    \"userGrowthToMaturity\": 0,\n                    \"userCropVariety\": null\n                }\n            }\n        ]\n    },\n    \"geoJsonBoundary\": {\n        \"type\": \"Polygon\",\n        \"coordinates\": [\n            [\n                [\n                    34.8669291,\n                    32.2835288\n                ],\n                [\n                    34.8628092,\n                    32.270394\n                ],\n                [\n                    34.8531532,\n                    32.2727526\n                ],\n                [\n                    34.8577881,\n                    32.2841093\n                ],\n                [\n                    34.8669291,\n                    32.2835288\n                ]\n            ]\n        ]\n    },\n    \"fieldShape\": \"Polygon\",\n    \"fieldName\": \"ZoningField\"\n}",
+							"raw": "{\n  \"soilZonesGeoJson\": {\n        \"type\": \"FeatureCollection\",\n        \"features\": [\n            {\n                \"geometry\": {\n                    \"type\": \"MultiPolygon\",\n                    \"coordinates\": {{soilZonescoordinates0}}\n                },\n                \"type\": \"Feature\",\n                \"properties\": {\n                    \"mukey\": null\n                }\n            },\n            {\n                \"geometry\": {\n                    \"type\": \"MultiPolygon\",\n                    \"coordinates\": {{soilZonescoordinates1}}\n                },\n                \"type\": \"Feature\",\n                \"properties\": {\n                    \"mukey\": null\n                }\n            }\n        ]\n    },\n  \"cropZonesGeoJson\": {\n        \"type\": \"FeatureCollection\",\n        \"features\": [\n            {\n                \"geometry\": {\n                    \"type\": \"MultiPolygon\",\n                    \"coordinates\": {{cropZonesGeoJson0}}\n                },\n                \"type\": \"Feature\",\n                \"properties\": {\n                    \"cropId\": 2,\n                    \"plantingDate\": 0,\n                    \"emergenceDate\": 0,\n                    \"center\": [\n                        34.85824472392706,\n                        32.27800012267532\n                    ],\n                    \"userGrowthToMaturity\": 0,\n                    \"userCropVariety\": null\n                }\n            },\n            {\n                \"geometry\": {\n                    \"type\": \"MultiPolygon\",\n                    \"coordinates\": {{cropZonesGeoJson1}}\n                },\n                \"type\": \"Feature\",\n                \"properties\": {\n                    \"cropId\": 3,\n                    \"plantingDate\": 0,\n                    \"emergenceDate\": 0,\n                    \"center\": [\n                        34.86282577079935,\n                        32.276988859144176\n                    ],\n                    \"userGrowthToMaturity\": 0,\n                    \"userCropVariety\": null\n                }\n            }\n        ]\n    },\n  \"irrigationZonesGeoJson\": {\n    \"type\": \"FeatureCollection\",\n    \"features\": [\n      {\n        \"type\": \"Feature\",\n        \"geometry\": {\n          \"type\": \"Polygon\",\n          \"coordinates\":{{irrigationZonesGeoJson0}}\n        },\n        \"properties\": {\n          \"id\": \"ManualBoundary\",\n          \"shapeType\": \"polygon\",\n          \"irrigationType\": 3,\n          \"icon\": \"/assets/images/buttons/irrigation/other-irrigation.svg\",\n          \"center\": [\n            34.85824472392706,\n                        32.27800012267532\n          ],\n          \"zoneShape\": {\n            \"id\": 1\n          }\n        }\n      }\n    ]\n  },\n    \"geoJsonBoundary\": {\n        \"type\": \"Polygon\",\n        \"coordinates\": [\n            [\n                [\n                    34.8669291,\n                    32.2835288\n                ],\n                [\n                    34.8628092,\n                    32.270394\n                ],\n                [\n                    34.8531532,\n                    32.2727526\n                ],\n                [\n                    34.8577881,\n                    32.2841093\n                ],\n                [\n                    34.8669291,\n                    32.2835288\n                ]\n            ]\n        ]\n    },\n    \"fieldShape\": \"Polygon\",\n    \"fieldName\": \"ZoningField\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2629,6 +2629,118 @@
 									"key": "farmId",
 									"value": "{{farmId}}"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post irrigation System Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6b2de513-9e98-4f91-9ffa-4b87e82ed4b6",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"features\": [\r\n    {\r\n      \"geometry\": \"string\",\r\n      \"properties\": {\r\n        \"endIndex\": 0,\r\n        \"irrigationType\": 0,\r\n        \"startIndex\": 0,\r\n        \"zoneShape\": {\r\n          \"description\": \"Polygon\",\r\n          \"id\": 0,\r\n          \"objectIdentity\": \"string\",\r\n          \"objectNature\": \"IrrigationType\"\r\n        }\r\n      },\r\n      \"type\": \"string\"\r\n    }\r\n  ],\r\n  \"type\": \"string\"\r\n}"
+						},
+						"url": {
+							"raw": "{{Domain}}/fields/{{fieldId}}/irrigations",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"fields",
+								"{{fieldId}}",
+								"irrigations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get field centers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b6eaa942-c0c5-4068-9b24-1352cc4bb9f1",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 450ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(450);",
+									"});",
+									"postman.setEnvironmentVariable(\"fieldId\", jsonData.content[0].fields[0].fieldId);",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "b23afbb7-814a-4055-b0ea-16aa18ef94ad",
+								"exec": [
+									"postman.clearEnvironmentVariable(\"fieldId\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/centers",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								"centers"
 							]
 						}
 					},
@@ -2715,7 +2827,7 @@
 					"response": []
 				},
 				{
-					"name": "get field centers",
+					"name": "Get irrigation system",
 					"event": [
 						{
 							"listen": "test",
@@ -2725,10 +2837,8 @@
 									"var jsonData = JSON.parse(responseBody);",
 									"pm.test(\"Response time is less than 450ms\", function () {",
 									"    pm.expect(pm.response.responseTime).to.be.below(450);",
+									"",
 									"});",
-									"postman.setEnvironmentVariable(\"fieldId\", jsonData.content[0].fields[0].fieldId);",
-									"",
-									"",
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});"
@@ -2760,7 +2870,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://api.cropx.info/api/fields/centers",
+							"raw": "https://api.cropx.info/api/fields/{{fieldId}}/irrigations",
 							"protocol": "https",
 							"host": [
 								"api",
@@ -2770,7 +2880,8 @@
 							"path": [
 								"api",
 								"fields",
-								"centers"
+								"{{fieldId}}",
+								"irrigations"
 							]
 						}
 					},
