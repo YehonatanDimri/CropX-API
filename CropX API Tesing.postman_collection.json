@@ -1,0 +1,4586 @@
+{
+	"info": {
+		"_postman_id": "54c27b92-ae28-4d73-8778-be238e8cc301",
+		"name": "CropX API Tesing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User action",
+			"item": [
+				{
+					"name": "Sign in- Correct values",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "fd972f33-fb00-47fa-bf96-00c718d22840",
+								"exec": [
+									"postman.clearEnvironmentVariable(\"token\");",
+									"postman.clearEnvironmentVariable(\"userId\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "51cd92d8-2eda-4dee-af67-a275fe1261a3",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"postman.setEnvironmentVariable(\"token\", jsonData.content.token);",
+									"postman.setEnvironmentVariable(\"userId\", jsonData.content.userId);",
+									"",
+									"",
+									"pm.test(\"Response time is less than 1100ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1100);",
+									"});",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"ydcropx@gmail.com@x\",\n  \"password\": \"Syd12061986\"\n}\n"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/user/login",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign in- InCorrect values",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "fd972f33-fb00-47fa-bf96-00c718d22840",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "51cd92d8-2eda-4dee-af67-a275fe1261a3",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"",
+									"pm.test(\"incorrect password message checking\", function() {",
+									"    pm.expect(jsonData.message).to.equal(\"Wrong username or password.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"ydcropx@gmail.com@x\",\n  \"password\": \"Ddemo1234\"\n}\n"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/user/login",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset password",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a3172eb0-454d-42cf-afe8-48bacc43a66a",
+								"exec": [
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "cf3e8c78-8607-48d3-9935-d71c48c80649",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 600ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(600);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"oldPassword\": \"Syd12061986\",\r\n  \"newPassword\": \"Ddemo1234\"\r\n}\r\n\r\n"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/user/change-password",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"user",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign in",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "fd972f33-fb00-47fa-bf96-00c718d22840",
+								"exec": [
+									"postman.clearEnvironmentVariable(\"token\");",
+									"postman.clearEnvironmentVariable(\"userId\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "51cd92d8-2eda-4dee-af67-a275fe1261a3",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"postman.setEnvironmentVariable(\"token\", jsonData.content.token);",
+									"postman.setEnvironmentVariable(\"userId\", jsonData.content.userId);",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"userId checking\", function() {",
+									"    pm.expect(jsonData.content.userId).to.equal(1628);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"ydcropx@gmail.com@x\",\n  \"password\": \"Ddemo1234\"\n}\n"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/user/login",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset password",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a3172eb0-454d-42cf-afe8-48bacc43a66a",
+								"exec": [
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "cf3e8c78-8607-48d3-9935-d71c48c80649",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 600ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(600);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"oldPassword\": \"Ddemo1234\",\r\n  \"newPassword\": \"Syd12061986\"\r\n}\r\n\r\n"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/user/change-password",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"user",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign in- Correct values",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "fd972f33-fb00-47fa-bf96-00c718d22840",
+								"exec": [
+									"postman.clearEnvironmentVariable(\"token\");",
+									"postman.clearEnvironmentVariable(\"userId\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "51cd92d8-2eda-4dee-af67-a275fe1261a3",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"postman.setEnvironmentVariable(\"token\", jsonData.content.token);",
+									"postman.setEnvironmentVariable(\"userId\", jsonData.content.userId);",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"ydcropx@gmail.com@x\",\n  \"password\": \"Syd12061986\"\n}\n"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/user/login",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Notifications",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d098f77d-90aa-4512-b199-c4d633217e41",
+								"exec": [
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 1500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.cropx.info/api/user/{{userId}}/notifications",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"user",
+								"{{userId}}",
+								"notifications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User permissions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "940e3615-1732-4568-b5e9-8c4a2cf80d5d",
+								"exec": [
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 3500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(3500);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.cropx.info/api/user/permissions",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"user",
+								"permissions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post user address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7464d906-410b-4ca4-9604-df978561088a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n[\n  {\n    \"addressType\": \"Shipping\",\n    \"city\": \"Netanya\",\n    \"country\": {\n      \"code\": \"1\",\n      \"description\": \"string\",\n      \"id\": 23,\n      \"objectIdentity\": \"string\",\n      \"objectNature\": \"string\"\n    },\n    \"firstName\": \"CROP\",\n    \"id\": 1,\n    \"lastName\": \"x\",\n    \"mobile\": \"054-9464464\",\n    \"street\": \"Giborey israel 5 \",\n    \"zip\": \"1206\"\n  }\n]"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/user/address",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"user",
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user address",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "283c1c1c-7977-4389-8faf-b1bdfe7886eb",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "9782cccf-159f-4882-8259-1a907bd674e9",
+								"exec": [
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 400ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Your test name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.content[0].id).to.eql(1);",
+									"});",
+									"",
+									"pm.test(\"addressType test\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.content[0].addressType).to.eql(\"Shipping\");",
+									"});",
+									"",
+									"pm.test(\"country.id test\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.content[0].country.id).to.eql(23);",
+									"});",
+									"",
+									"pm.test(\"country test \", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.content[0].country.description).to.eql(\"Benin\");",
+									"});",
+									"",
+									"pm.test(\"country.code test\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.content[0].country.code).to.eql(\"BJ\");",
+									"});",
+									"",
+									"pm.test(\"objectNature test\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.content[0].country.objectNature).to.eql(\"Country\");",
+									"});",
+									"",
+									"pm.test(\"city test\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.content[0].city).to.eql(\"Netanya\");",
+									"});",
+									"",
+									"pm.test(\"street test\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.content[0].street).to.eql(\"Giborey israel 5 \");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.cropx.info/api/user/address",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"user",
+								"address"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Activate/deactivate Sensor flow",
+			"item": [
+				{
+					"name": "Sign in Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "fd972f33-fb00-47fa-bf96-00c718d22840",
+								"exec": [
+									"postman.clearEnvironmentVariable(\"token\");",
+									"postman.clearEnvironmentVariable(\"userId\");",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "51cd92d8-2eda-4dee-af67-a275fe1261a3",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"postman.setEnvironmentVariable(\"token\", jsonData.content.token);",
+									"postman.setEnvironmentVariable(\"userId\", jsonData.content.userId);",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"pm.test(\"Response time is less than 1100ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1100);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"ydcropx@gmail.com@x\",\n  \"password\": \"Syd12061986\"\n}\n"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/user/login",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add farm",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "55b8a451-6d94-45fe-8b36-dd04e35881dc",
+								"exec": [
+									"postman.clearEnvironmentVariable(\"farmId\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "6678875f-9bba-4a9e-a179-d108b58f33ee",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 450ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(450);",
+									"});",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"postman.setEnvironmentVariable(\"farmId\", jsonData.content.id);",
+									"",
+									"pm.test(\"Farm name\", function() {",
+									"    pm.expect(jsonData.content.name).to.equal(\"\\\"APITesting Farm\\\"\");",
+									"});",
+									"",
+									"pm.test(\"name\", function() {",
+									"    pm.expect(jsonData.content.account.name).to.equal(\"ydcropx@gmail.com\");",
+									"});",
+									"",
+									"pm.test(\"enabled\", function() {",
+									"    pm.expect(jsonData.content.account.enabled).to.equal(true);",
+									"});",
+									"",
+									"pm.test(\"objectNature\", function() {",
+									"    pm.expect(jsonData.content.account.objectNature).to.equal(\"Account\");",
+									"});",
+									"",
+									"pm.test(\"unassigned\", function() {",
+									"    pm.expect(jsonData.content.unassigned).to.equal(false);",
+									"});",
+									"",
+									"pm.test(\"deleted\", function() {",
+									"    pm.expect(jsonData.content.deleted).to.equal(false);",
+									"});",
+									"",
+									"pm.test(\"objectNature\", function() {",
+									"    pm.expect(jsonData.content.objectNature).to.equal(\"Farm\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\"APITesting Farm\""
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/farms/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"farms",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post fields",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "0359a5fc-ab0b-4c2f-8c9a-a647f72ec213",
+								"exec": [
+									"postman.clearEnvironmentVariable(\"fieldId\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "53d1cdd9-d5a9-41ef-ae05-67eed37a7b74",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 600ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(600);",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"postman.setEnvironmentVariable(\"fielId\", jsonData.content.fieldId);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cropZonesGeoJson\": {\n        \"type\": \"FeatureCollection\",\n        \"features\": [\n            {\n                \"geometry\": {\n                    \"type\": \"MultiPolygon\",\n                    \"coordinates\": [\n                        [\n                            [\n                                [\n                                    34.86552,\n                                    32.2793866\n                                ],\n                                [\n                                    34.8631382,\n                                    32.2716761\n                                ],\n                                [\n                                    34.854641,\n                                    32.2738714\n                                ],\n                                [\n                                    34.8575377,\n                                    32.2812188\n                                ],\n                                [\n                                    34.8654985,\n                                    32.2794228\n                                ],\n                                [\n                                    34.86552,\n                                    32.2793866\n                                ]\n                            ]\n                        ]\n                    ]\n                },\n                \"properties\": {\n                    \"plantingDate\": 0,\n                    \"cropId\": 4,\n                    \"emergenceDate\": 0\n                },\n                \"type\": \"Feature\"\n            }\n        ]\n    },\n    \"soilZonesGeoJson\": {\n        \"type\": \"FeatureCollection\",\n        \"features\": [\n            {\n                \"geometry\": {\n                    \"type\": \"MultiPolygon\",\n                    \"coordinates\": [\n                        [\n                            [\n                                [\n                                    34.86552,\n                                    32.2793866\n                                ],\n                                [\n                                    34.8631382,\n                                    32.2716761\n                                ],\n                                [\n                                    34.854641,\n                                    32.2738714\n                                ],\n                                [\n                                    34.8575377,\n                                    32.2812188\n                                ],\n                                [\n                                    34.8654985,\n                                    32.2794228\n                                ],\n                                [\n                                    34.86552,\n                                    32.2793866\n                                ]\n                            ]\n                        ]\n                    ]\n                },\n                \"properties\": {},\n                \"type\": \"Feature\"\n            }\n        ]\n    },\n    \"geoJsonBoundary\": {\n        \"type\": \"Polygon\",\n        \"coordinates\": [\n            [\n                [\n                    34.86552,\n                    32.2793866\n                ],\n                [\n                    34.8631382,\n                    32.2716761\n                ],\n                [\n                    34.854641,\n                    32.2738714\n                ],\n                [\n                    34.8575377,\n                    32.2812188\n                ],\n                [\n                    34.8654985,\n                    32.2794228\n                ],\n                [\n                    34.86552,\n                    32.2793866\n                ]\n            ]\n        ]\n    },\n    \"fieldShape\": \"Polygon\",\n    \"fieldName\": \"PlayFarm\"\n}"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/?farmId={{farmId}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								""
+							],
+							"query": [
+								{
+									"key": "farmId",
+									"value": "{{farmId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activate Sensor assign to field-far srom location",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "21c4bd59-e932-4f99-804b-7e26911c3d35",
+								"exec": [
+									"postman.setEnvironmentVariable(\"fieldNodeId\")"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "c08f265d-2643-4ab2-a32f-642887a706ab",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Current location is too far from the field message checking\", function() {",
+									"    pm.expect(jsonData.message).to.equal(\"Current location is too far from the field (1.38585898E7m) \");",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"latitude\":-35.0544059,\n  \"longitude\": 147.119115,\n  \"qrCode\": \"V200448\"\n}\n\n"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/{{fielId}}/sensors/activate/?farmId={{farmId}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								"{{fielId}}",
+								"sensors",
+								"activate",
+								""
+							],
+							"query": [
+								{
+									"key": "farmId",
+									"value": "{{farmId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activate Sensor assign to field",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "21c4bd59-e932-4f99-804b-7e26911c3d35",
+								"exec": [
+									"postman.setEnvironmentVariable(\"fieldNodeId\")"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "c08f265d-2643-4ab2-a32f-642887a706ab",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"postman.setEnvironmentVariable(\"fieldNodeId\", jsonData.content.fieldNodeId);",
+									"",
+									"pm.test(\"Response time is less than 600ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(600);",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"latitude\":32.2793866,\n  \"longitude\": 34.86552,\n  \"qrCode\": \"V200448\"\n}\n"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/{{fielId}}/sensors/activate/?farmId={{farmId}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								"{{fielId}}",
+								"sensors",
+								"activate",
+								""
+							],
+							"query": [
+								{
+									"key": "farmId",
+									"value": "{{farmId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSensorThresholds",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7594a4a3-9cb4-4877-9a3f-9000f07e237b",
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/{{fielId}}/nodes/{{fieldNodeId}}/thresholds",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								"{{fielId}}",
+								"nodes",
+								"{{fieldNodeId}}",
+								"thresholds"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deactivate sensor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "73305e5a-f470-4d2d-850d-fef94a8c03d9",
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/{{fielId}}/sensors/{{fieldNodeId}}/deactivate",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								"{{fielId}}",
+								"sensors",
+								"{{fieldNodeId}}",
+								"deactivate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activate Sensor UnAssign in field",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a5bb1ef9-578b-477b-a68b-6d1ed1512072",
+								"exec": [
+									"postman.clearEnvironmentVariable(\"fieldNodeId\")",
+									"postman.clearEnvironmentVariable(\"fieldId\");",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "11a88249-4320-40ab-9e31-fc2e9ba9badb",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 1400ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1400);",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"postman.setEnvironmentVariable(\"fieldNodeId\", jsonData.content.fieldNodeId);",
+									"postman.setEnvironmentVariable(\"fielId\", jsonData.content.fieldId);",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"latitude\":33.313976,\n  \"longitude\":-116.349245,\n  \"qrCode\": \"V200448\"\n}\n\n\n"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/*/sensors/activate",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								"*",
+								"sensors",
+								"activate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get events for sensor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9e0cb479-4917-4b53-b81e-79d8f2deb94f",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.test(\"Response time is less than 450ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(450);\r",
+									"});\r",
+									"\r",
+									"pm.test('farmEvents existing', function() {\r",
+									"  pm.expect(jsonData.content).to.have.property('farmEvents'\r",
+									"  );\r",
+									"});\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/farms/*/events?fieldNodeId={{fieldNodeId}}&name=MissingSensorData&status=Open",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"farms",
+								"*",
+								"events"
+							],
+							"query": [
+								{
+									"key": "fieldNodeId",
+									"value": "{{fieldNodeId}}"
+								},
+								{
+									"key": "name",
+									"value": "MissingSensorData"
+								},
+								{
+									"key": "status",
+									"value": "Open"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get weather by field id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1d1f7365-a0a8-46b6-a779-4d86815cd527",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test('code existing', function() {\r",
+									"  pm.expect(jsonData.content.condition).to.have.property('code'\r",
+									"  );\r",
+									"});\r",
+									"  pm.test('date existing', function() {\r",
+									"  pm.expect(jsonData.content.condition).to.have.property('date'\r",
+									"  );\r",
+									"  });\r",
+									"  pm.test('text existing', function() {\r",
+									"  pm.expect(jsonData.content.condition).to.have.property('text'\r",
+									"  );\r",
+									"  });\r",
+									"  pm.test('et existing', function() {\r",
+									"  pm.expect(jsonData.content.condition).to.have.property('et'\r",
+									"  );\r",
+									"  });\r",
+									"  pm.test('avgWindSpeed existing', function() {\r",
+									"  pm.expect(jsonData.content.condition).to.have.property('avgWindSpeed'\r",
+									"  );\r",
+									"  });\r",
+									"  pm.test('minRelativeHumidity existing', function() {\r",
+									"  pm.expect(jsonData.content.condition).to.have.property('minRelativeHumidity'\r",
+									"  );\r",
+									"  });\r",
+									"   pm.test('dailyPrecipitation existing', function() {\r",
+									"  pm.expect(jsonData.content.condition).to.have.property('dailyPrecipitation'\r",
+									"  );\r",
+									"   });\r",
+									"   pm.test('hourlyTemp existing', function() {\r",
+									"  pm.expect(jsonData.content.condition).to.have.property('hourlyTemp'\r",
+									"  );\r",
+									"   });\r",
+									"   pm.test('conditionId existing', function() {\r",
+									"  pm.expect(jsonData.content.condition).to.have.property('conditionId'\r",
+									"  );\r",
+									"   });\r",
+									"   pm.test('condition existing', function() {\r",
+									"  pm.expect(jsonData.content.condition).to.have.property('condition'\r",
+									"  );\r",
+									"   });\r",
+									"    pm.test('temp existing', function() {\r",
+									"  pm.expect(jsonData.content.condition).to.have.property('temp'\r",
+									"  );\r",
+									"});\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/{{fielId}}/weather",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								"{{fielId}}",
+								"weather"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deactivate sensor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d79bd867-fb7b-4432-bcfb-08b0e6adc07a",
+								"exec": [
+									"pm.test(\"Response time is less than 500 ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/{{fielId}}/sensors/{{fieldNodeId}}/deactivate",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								"{{fielId}}",
+								"sensors",
+								"{{fieldNodeId}}",
+								"deactivate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Field Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "df01a707-1e9c-49f2-b303-aa3b9796d1be",
+								"exec": [
+									"pm.test(\"Response time is less than 450ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(450);",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/{{fielId}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								"{{fielId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get field centers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b6eaa942-c0c5-4068-9b24-1352cc4bb9f1",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 4500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(450);",
+									"});",
+									"",
+									"postman.setEnvironmentVariable(\"fieldId\", jsonData.content[0].fields[0].fieldId);",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "b23afbb7-814a-4055-b0ea-16aa18ef94ad",
+								"exec": [
+									"postman.clearEnvironmentVariable(\"fieldId\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/centers",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								"centers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Field Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "57823151-7caa-496c-80e3-6258bbbbe42a",
+								"exec": [
+									"pm.test(\"Response time is less than 450ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(450);",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/{{fieldId}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								"{{fieldId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get farms",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "54ca7b68-55af-4f5a-aa7f-5aa64b3efe91",
+								"exec": [
+									"postman.setEnvironmentVariable(\"farmId\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d1039904-878f-4e78-8588-e7454bd3f69c",
+								"exec": [
+									"pm.test(\"Response time is less than 450ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(450);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"postman.setEnvironmentVariable(\"farmId\", jsonData.content[0].id);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.cropx.info/api/farms/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"farms",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Farm Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8b211149-5bd5-4299-8950-ffd5e4fbde34",
+								"exec": [
+									"pm.test(\"Response time is less than 530ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(530);",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/farms/{{farmId}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"farms",
+								"{{farmId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get farms",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "54ca7b68-55af-4f5a-aa7f-5aa64b3efe91",
+								"exec": [
+									"postman.setEnvironmentVariable(\"farmId\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d1039904-878f-4e78-8588-e7454bd3f69c",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 450ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(450);",
+									"});",
+									"postman.setEnvironmentVariable(\"farmId\", jsonData.content[0].id);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.cropx.info/api/farms/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"farms",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Farm Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "810c71d5-ce1d-4bb5-bcd2-45e848d46fad",
+								"exec": [
+									"pm.test(\"Response time is less than 530ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(530);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/farms/{{farmId}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"farms",
+								"{{farmId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get farms",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "54ca7b68-55af-4f5a-aa7f-5aa64b3efe91",
+								"exec": [
+									"postman.setEnvironmentVariable(\"farmId\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d1039904-878f-4e78-8588-e7454bd3f69c",
+								"exec": [
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"postman.setEnvironmentVariable(\"farmId\", jsonData.content[0].id);",
+									"pm.test(\"Response time is less than 450ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(450);",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.cropx.info/api/farms/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"farms",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Farm Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f777c08d-58c6-4779-8345-5f8f8014927d",
+								"exec": [
+									"pm.test(\"Response time is less than 530ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(530);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/farms/{{farmId}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"farms",
+								"{{farmId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Zoning Soil Copy",
+			"item": [
+				{
+					"name": "Sign in",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "fd972f33-fb00-47fa-bf96-00c718d22840",
+								"exec": [
+									"postman.clearEnvironmentVariable(\"token\");",
+									"postman.clearEnvironmentVariable(\"userId\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "51cd92d8-2eda-4dee-af67-a275fe1261a3",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"postman.setEnvironmentVariable(\"token\", jsonData.content.token);",
+									"postman.setEnvironmentVariable(\"userId\", jsonData.content.userId);",
+									"",
+									"",
+									"",
+									"pm.test(\"Response time is less than 1000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+									"});",
+									"",
+									"",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"ydcropx@gmail.com@x\",\n  \"password\": \"Syd12061986\"\n}\n"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/user/login",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add farm",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "55b8a451-6d94-45fe-8b36-dd04e35881dc",
+								"exec": [
+									"postman.clearEnvironmentVariable(\"farmId\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "6678875f-9bba-4a9e-a179-d108b58f33ee",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 450ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(450);",
+									"});",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"postman.setEnvironmentVariable(\"farmId\", jsonData.content.id);",
+									"",
+									"pm.test(\"Farm name\", function() {",
+									"    pm.expect(jsonData.content.name).to.equal(\"\\\"YehoFarm\\\"\");",
+									"});",
+									"",
+									"pm.test(\"name\", function() {",
+									"    pm.expect(jsonData.content.account.name).to.equal(\"ydcropx@gmail.com\");",
+									"});",
+									"",
+									"pm.test(\"enabled\", function() {",
+									"    pm.expect(jsonData.content.account.enabled).to.equal(true);",
+									"});",
+									"",
+									"pm.test(\"objectNature\", function() {",
+									"    pm.expect(jsonData.content.account.objectNature).to.equal(\"Account\");",
+									"});",
+									"",
+									"pm.test(\"unassigned\", function() {",
+									"    pm.expect(jsonData.content.unassigned).to.equal(false);",
+									"});",
+									"",
+									"pm.test(\"deleted\", function() {",
+									"    pm.expect(jsonData.content.deleted).to.equal(false);",
+									"});",
+									"",
+									"pm.test(\"objectNature\", function() {",
+									"    pm.expect(jsonData.content.objectNature).to.equal(\"Farm\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\"YehoFarm\""
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/farms/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"farms",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "manual-zoning- Soil zone",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "0496d347-07b6-4880-b743-3b85a23f4b81",
+								"exec": [
+									"postman.setGlobalVariable(\"soilZonesGeoJson\");",
+									"postman.setGlobalVariable(\"soilZonescoordinates0\");",
+									"postman.setGlobalVariable(\"soilZonescoordinates1\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "f55af3ba-a38f-4875-ae6d-10ec0d66cde4",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"postman.setGlobalVariable(\"soilZonesGeoJson\", JSON.stringify (jsonData.content.soilZonesGeoJson));",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"postman.setGlobalVariable(\"soilZonescoordinates0\", JSON.stringify (jsonData.content.soilZonesGeoJson.features[0].geometry.coordinates));",
+									"",
+									"postman.setGlobalVariable(\"soilZonescoordinates1\", JSON.stringify (jsonData.content.soilZonesGeoJson.features[1].geometry.coordinates));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"soilZonesGeoJson\": {\n        \"type\": \"FeatureCollection\",\n        \"features\": [\n            {\n                \"geometry\": {\n                    \"type\": \"MultiPolygon\",\n                    \"coordinates\": [\n                        [\n                            [\n                                [\n                                    34.8669291,\n                                    32.2835288\n                                ],\n                                [\n                                    34.8628092,\n                                    32.270394\n                                ],\n                                [\n                                    34.8531532,\n                                    32.2727526\n                                ],\n                                [\n                                    34.8577881,\n                                    32.2841093\n                                ],\n                                [\n                                    34.8669291,\n                                    32.2835288\n                                ]\n                            ]\n                        ]\n                    ]\n                },\n                \"properties\": {},\n                \"type\": \"Feature\"\n            }\n        ]\n    },\n    \"lineStringGeoJson\": {\n        \"type\": \"FeatureCollection\",\n        \"features\": [\n            {\n                \"geometry\": {\n                    \"type\": \"LineString\",\n                    \"coordinates\": [\n                        [\n                            [\n                                34.867165767695724,\n                                32.27596382501216\n                            ],\n                            [\n                                34.85248871996623,\n                                32.27959218440003\n                            ]\n                        ]\n                    ]\n                },\n                \"type\": \"Feature\"\n            }\n        ]\n    }\n}"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/soils/manual-zoning",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								"soils",
+								"manual-zoning"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "manual-zoning- Crop zone",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e7028f2a-0328-461d-a6a9-95ccee154611",
+								"exec": [
+									"postman.setGlobalVariable(\"cropZonesGeoJson0\");",
+									"postman.setGlobalVariable(\"cropZonesGeoJson1\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "3658a484-8f76-4dfe-9e69-176335dbd759",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 400ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"",
+									"",
+									"postman.setGlobalVariable(\"cropZonesGeoJson0\", JSON.stringify (jsonData.content.cropZonesGeoJson.features[0].geometry.coordinates));",
+									"",
+									"postman.setGlobalVariable(\"cropZonesGeoJson1\", JSON.stringify (jsonData.content.cropZonesGeoJson.features[1].geometry.coordinates));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cropZonesGeoJson\": {\n        \"type\": \"FeatureCollection\",\n        \"features\": [\n            {\n                \"geometry\": {\n                    \"type\": \"MultiPolygon\",\n                    \"coordinates\": [\n                        [\n                            [\n                                [\n                                    34.8669291,\n                                    32.2835288\n                                ],\n                                [\n                                    34.8628092,\n                                    32.270394\n                                ],\n                                [\n                                    34.8531532,\n                                    32.2727526\n                                ],\n                                [\n                                    34.8577881,\n                                    32.2841093\n                                ],\n                                [\n                                    34.8669291,\n                                    32.2835288\n                                ]\n                            ]\n                        ]\n                    ]\n                },\n                \"type\": \"Feature\",\n                \"properties\": {}\n            }\n        ]\n    },\n    \"lineStringGeoJson\": {\n        \"type\": \"FeatureCollection\",\n        \"features\": [\n            {\n                \"geometry\": {\n                    \"type\": \"LineString\",\n                    \"coordinates\": [\n                        [\n                            [\n                                34.86853905871135,\n                                32.284490239350426\n                            ],\n                            [\n                                34.8498708839677,\n                                32.27117416840306\n                            ]\n                        ]\n                    ]\n                },\n                \"type\": \"Feature\"\n            }\n        ]\n    }\n}"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/crops/manual-zoning",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								"crops",
+								"manual-zoning"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "manual-zoning- Irrigation zone",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "cd016ded-9fd3-4a0b-bb82-22a3f993a753",
+								"exec": [
+									"postman.setGlobalVariable(\"irrigationZonesGeoJson0\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "c0c23627-17ae-49c1-ad2e-baa8374ba556",
+								"exec": [
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 600ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(600);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"postman.setGlobalVariable(\"irrigationZonesGeoJson0\", JSON.stringify (jsonData.content.zonesGeoJson.features[0].geometry.coordinates));",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"zonesGeoJson\": {\n    \"features\": [\n      {\n        \"geometry\": {\n          \"type\": \"MultiPolygon\",\n          \"coordinates\": [\n            [\n              [\n                [\n                  -105.88359563980724,\n                  37.404154666637105\n                ],\n                [\n                  -105.88359630650115,\n                  37.40409398017325\n                ],\n                [\n                  -105.8835983063798,\n                  37.40403331219508\n                ],\n                [\n                  -105.883601638834,\n                  37.403972681182644\n                ],\n                [\n                  -105.88360630284865,\n                  37.403912105604746\n                ],\n                [\n                  -105.88361229700305,\n                  37.40385160391329\n                ],\n                [\n                  -105.88361961947133,\n                  37.40379119453767\n                ],\n                [\n                  -105.883628268023,\n                  37.40373089587917\n                ],\n                [\n                  -105.8836382400236,\n                  37.40367072630535\n                ],\n                [\n                  -105.8836495324356,\n                  37.40361070414445\n                ],\n                [\n                  -105.88366214181919,\n                  37.40355084767979\n                ],\n                [\n                  -105.88367606433343,\n                  37.40349117514423\n                ],\n                [\n                  -105.8836912957374,\n                  37.403431704714606\n                ],\n                [\n                  -105.88370783139148,\n                  37.40337245450619\n                ],\n                [\n                  -105.88372566625873,\n                  37.40331344256717\n                ],\n                [\n                  -105.88374479490648,\n                  37.40325468687315\n                ],\n                [\n                  -105.88376521150795,\n                  37.40319620532168\n                ],\n                [\n                  -105.88378690984406,\n                  37.40313801572682\n                ],\n                [\n                  -105.88380988330529,\n                  37.40308013581366\n                ],\n                [\n                  -105.88383412489368,\n                  37.40302258321301\n                ],\n                [\n                  -105.88385962722502,\n                  37.402965375455935\n                ],\n                [\n                  -105.88388638253106,\n                  37.40290852996848\n                ],\n                [\n                  -105.88391438266187,\n                  37.402852064066316\n                ],\n                [\n                  -105.88394361908833,\n                  37.40279599494952\n                ],\n                [\n                  -105.88397408290476,\n                  37.40274033969728\n                ],\n                [\n                  -105.88400576483156,\n                  37.40268511526273\n                ],\n                [\n                  -105.88403865521813,\n                  37.40263033846776\n                ],\n                [\n                  -105.88407274404572,\n                  37.40257602599792\n                ],\n                [\n                  -105.88410802093057,\n                  37.40252219439731\n                ],\n                [\n                  -105.88414447512697,\n                  37.40246886006356\n                ],\n                [\n                  -105.88418209553065,\n                  37.402416039242816\n                ],\n                [\n                  -105.88422087068204,\n                  37.402363748024825\n                ],\n                [\n                  -105.88426078876988,\n                  37.40231200233799\n                ],\n                [\n                  -105.88430183763471,\n                  37.40226081794455\n                ],\n                [\n                  -105.88434400477266,\n                  37.402210210435776\n                ],\n                [\n                  -105.8843872773392,\n                  37.40216019522719\n                ],\n                [\n                  -105.8844316421531,\n                  37.402110787553916\n                ],\n                [\n                  -105.88447708570041,\n                  37.40206200246601\n                ],\n                [\n                  -105.88452359413859,\n                  37.402013854823885\n                ],\n                [\n                  -105.8845711533007,\n                  37.40196635929377\n                ],\n                [\n                  -105.88461974869976,\n                  37.401919530343285\n                ],\n                [\n                  -105.88466936553316,\n                  37.40187338223696\n                ],\n                [\n                  -105.88471998868711,\n                  37.40182792903196\n                ],\n                [\n                  -105.88477160274132,\n                  37.40178318457377\n                ],\n                [\n                  -105.88482419197365,\n                  37.401739162492\n                ],\n                [\n                  -105.8848777403649,\n                  37.401695876196186\n                ],\n                [\n                  -105.88493223160373,\n                  37.40165333887176\n                ],\n                [\n                  -105.88498764909156,\n                  37.401611563476\n                ],\n                [\n                  -105.8850439759477,\n                  37.40157056273411\n                ],\n                [\n                  -105.88510119501443,\n                  37.401530349135285\n                ],\n                [\n                  -105.88515928886228,\n                  37.40149093492901\n                ],\n                [\n                  -105.88521823979531,\n                  37.4014523321212\n                ],\n                [\n                  -105.88527802985647,\n                  37.401414552470676\n                ],\n                [\n                  -105.88533864083314,\n                  37.401377607485465\n                ],\n                [\n                  -105.88540005426263,\n                  37.40134150841937\n                ],\n                [\n                  -105.88546225143781,\n                  37.40130626626853\n                ],\n                [\n                  -105.88552521341285,\n                  37.401271891768026\n                ],\n                [\n                  -105.88558892100887,\n                  37.401238395388674\n                ],\n                [\n                  -105.88565335481995,\n                  37.4012057873338\n                ],\n                [\n                  -105.88571849521892,\n                  37.401174077536126\n                ],\n                [\n                  -105.88578432236339,\n                  37.40114327565476\n                ],\n                [\n                  -105.88585081620177,\n                  37.40111339107227\n                ],\n                [\n                  -105.88591795647939,\n                  37.40108443289177\n                ],\n                [\n                  -105.88598572274466,\n                  37.40105640993421\n                ],\n                [\n                  -105.88605409435534,\n                  37.40102933073567\n                ],\n                [\n                  -105.88612305048478,\n                  37.401003203544704\n                ],\n                [\n                  -105.88619257012824,\n                  37.400978036319934\n                ],\n                [\n                  -105.8862626321094,\n                  37.400953836727524\n                ],\n                [\n                  -105.88633321508668,\n                  37.40093061213892\n                ],\n                [\n                  -105.88640429755984,\n                  37.400908369628546\n                ],\n                [\n                  -105.88647585787645,\n                  37.400887115971685\n                ],\n                [\n                  -105.88654787423854,\n                  37.40086685764241\n                ],\n                [\n                  -105.88662032470926,\n                  37.40084760081161\n                ],\n                [\n                  -105.88669318721946,\n                  37.40082935134509\n                ],\n                [\n                  -105.88676643957454,\n                  37.40081211480182\n                ],\n                [\n                  -105.88684005946111,\n                  37.40079589643223\n                ],\n                [\n                  -105.88691402445384,\n                  37.40078070117657\n                ],\n                [\n                  -105.88698831202228,\n                  37.40076653366348\n                ],\n                [\n                  -105.88706289953772,\n                  37.400753398208515\n                ],\n                [\n                  -105.88713776428007,\n                  37.40074129881286\n                ],\n                [\n                  -105.8872128834448,\n                  37.400730239162115\n                ],\n                [\n                  -105.88728823414992,\n                  37.40072022262515\n                ],\n                [\n                  -105.88736379344283,\n                  37.400711252253096\n                ],\n                [\n                  -105.88743953830746,\n                  37.40070333077843\n                ],\n                [\n                  -105.8875154456712,\n                  37.400696460614085\n                ],\n                [\n                  -105.8875914924119,\n                  37.400690643852805\n                ],\n                [\n                  -105.88766765536502,\n                  37.40068588226642\n                ],\n                [\n                  -105.88774391133057,\n                  37.40068217730536\n                ],\n                [\n                  -105.88782023708025,\n                  37.40067953009819\n                ],\n                [\n                  -105.88789660936447,\n                  37.40067794145127\n                ],\n                [\n                  -105.88797300491954,\n                  37.40067741184853\n                ],\n                [\n                  -105.88804940047461,\n                  37.40067794145127\n                ],\n                [\n                  -105.88812577275884,\n                  37.40067953009819\n                ],\n                [\n                  -105.88820209850851,\n                  37.40068217730536\n                ],\n                [\n                  -105.88827835447407,\n                  37.40068588226642\n                ],\n                [\n                  -105.88835451742719,\n                  37.400690643852805\n                ],\n                [\n                  -105.88843056416789,\n                  37.400696460614085\n                ],\n                [\n                  -105.88850647153163,\n                  37.40070333077843\n                ],\n                [\n                  -105.88858221639626,\n                  37.400711252253096\n                ],\n                [\n                  -105.88865777568917,\n                  37.40072022262515\n                ],\n                [\n                  -105.88873312639429,\n                  37.400730239162115\n                ],\n                [\n                  -105.88880824555902,\n                  37.40074129881286\n                ],\n                [\n                  -105.88888311030136,\n                  37.400753398208515\n                ],\n                [\n                  -105.8889576978168,\n                  37.40076653366348\n                ],\n                [\n                  -105.88903198538524,\n                  37.40078070117657\n                ],\n                [\n                  -105.88910595037798,\n                  37.40079589643223\n                ],\n                [\n                  -105.88917957026455,\n                  37.40081211480182\n                ],\n                [\n                  -105.88925282261962,\n                  37.40082935134509\n                ],\n                [\n                  -105.88932568512983,\n                  37.40084760081161\n                ],\n                [\n                  -105.88939813560054,\n                  37.40086685764241\n                ],\n                [\n                  -105.88947015196264,\n                  37.400887115971685\n                ],\n                [\n                  -105.88954171227925,\n                  37.400908369628546\n                ],\n                [\n                  -105.88961279475241,\n                  37.40093061213892\n                ],\n                [\n                  -105.88968337772968,\n                  37.400953836727524\n                ],\n                [\n                  -105.88975343971084,\n                  37.400978036319934\n                ],\n                [\n                  -105.8898229593543,\n                  37.401003203544704\n                ],\n                [\n                  -105.88989191548374,\n                  37.40102933073567\n                ],\n                [\n                  -105.88996028709442,\n                  37.40105640993421\n                ],\n                [\n                  -105.8900280533597,\n                  37.40108443289177\n                ],\n                [\n                  -105.89009519363732,\n                  37.40111339107227\n                ],\n                [\n                  -105.8901616874757,\n                  37.40114327565476\n                ],\n                [\n                  -105.89022751462016,\n                  37.401174077536126\n                ],\n                [\n                  -105.89029265501914,\n                  37.4012057873338\n                ],\n                [\n                  -105.89035708883021,\n                  37.401238395388674\n                ],\n                [\n                  -105.89042079642624,\n                  37.401271891768026\n                ],\n                [\n                  -105.89048375840127,\n                  37.40130626626853\n                ],\n                [\n                  -105.89054595557646,\n                  37.40134150841937\n                ],\n                [\n                  -105.89060736900595,\n                  37.401377607485465\n                ],\n                [\n                  -105.89066797998262,\n                  37.401414552470676\n                ],\n                [\n                  -105.89072777004378,\n                  37.4014523321212\n                ],\n                [\n                  -105.8907867209768,\n                  37.40149093492901\n                ],\n                [\n                  -105.89084481482466,\n                  37.401530349135285\n                ],\n                [\n                  -105.8909020338914,\n                  37.40157056273411\n                ],\n                [\n                  -105.89095836074753,\n                  37.401611563476\n                ],\n                [\n                  -105.89101377823536,\n                  37.40165333887176\n                ],\n                [\n                  -105.89106826947419,\n                  37.401695876196186\n                ],\n                [\n                  -105.89112181786544,\n                  37.401739162492\n                ],\n                [\n                  -105.89117440709776,\n                  37.40178318457377\n                ],\n                [\n                  -105.89122602115198,\n                  37.40182792903196\n                ],\n                [\n                  -105.89127664430593,\n                  37.40187338223696\n                ],\n                [\n                  -105.89132626113933,\n                  37.401919530343285\n                ],\n                [\n                  -105.89137485653839,\n                  37.40196635929377\n                ],\n                [\n                  -105.8914224157005,\n                  37.402013854823885\n                ],\n                [\n                  -105.89146892413868,\n                  37.40206200246601\n                ],\n                [\n                  -105.89151436768599,\n                  37.402110787553916\n                ],\n                [\n                  -105.89155873249989,\n                  37.40216019522719\n                ],\n                [\n                  -105.89160200506643,\n                  37.402210210435776\n                ],\n                [\n                  -105.89164417220438,\n                  37.40226081794455\n                ],\n                [\n                  -105.89168522106921,\n                  37.40231200233799\n                ],\n                [\n                  -105.89172513915705,\n                  37.402363748024825\n                ],\n                [\n                  -105.89176391430844,\n                  37.402416039242816\n                ],\n                [\n                  -105.89180153471212,\n                  37.40246886006356\n                ],\n                [\n                  -105.89183798890852,\n                  37.40252219439731\n                ],\n                [\n                  -105.89187326579336,\n                  37.40257602599792\n                ],\n                [\n                  -105.89190735462095,\n                  37.40263033846776\n                ],\n                [\n                  -105.89194024500753,\n                  37.40268511526273\n                ],\n                [\n                  -105.89197192693433,\n                  37.40274033969728\n                ],\n                [\n                  -105.89200239075076,\n                  37.40279599494952\n                ],\n                [\n                  -105.89203162717722,\n                  37.402852064066316\n                ],\n                [\n                  -105.89205962730803,\n                  37.40290852996848\n                ],\n                [\n                  -105.89208638261407,\n                  37.402965375455935\n                ],\n                [\n                  -105.89211188494541,\n                  37.40302258321301\n                ],\n                [\n                  -105.8921361265338,\n                  37.40308013581366\n                ],\n                [\n                  -105.89215909999503,\n                  37.40313801572682\n                ],\n                [\n                  -105.89218079833114,\n                  37.40319620532168\n                ],\n                [\n                  -105.89220121493261,\n                  37.40325468687315\n                ],\n                [\n                  -105.89222034358036,\n                  37.40331344256717\n                ],\n                [\n                  -105.89223817844761,\n                  37.40337245450619\n                ],\n                [\n                  -105.89225471410168,\n                  37.403431704714606\n                ],\n                [\n                  -105.89226994550566,\n                  37.40349117514423\n                ],\n                [\n                  -105.8922838680199,\n                  37.40355084767979\n                ],\n                [\n                  -105.89229647740349,\n                  37.40361070414445\n                ],\n                [\n                  -105.89230776981549,\n                  37.40367072630535\n                ],\n                [\n                  -105.89231774181609,\n                  37.40373089587917\n                ],\n                [\n                  -105.89232639036776,\n                  37.40379119453767\n                ],\n                [\n                  -105.89233371283603,\n                  37.40385160391329\n                ],\n                [\n                  -105.89233970699044,\n                  37.403912105604746\n                ],\n                [\n                  -105.8923443710051,\n                  37.403972681182644\n                ],\n                [\n                  -105.8923477034593,\n                  37.40403331219508\n                ],\n                [\n                  -105.89234970333794,\n                  37.40409398017325\n                ],\n                [\n                  -105.89235037003185,\n                  37.404154666637105\n                ],\n                [\n                  -105.89234970333794,\n                  37.404215353100966\n                ],\n                [\n                  -105.8923477034593,\n                  37.404276021079134\n                ],\n                [\n                  -105.8923443710051,\n                  37.404336652091565\n                ],\n                [\n                  -105.89233970699044,\n                  37.40439722766947\n                ],\n                [\n                  -105.89233371283603,\n                  37.40445772936093\n                ],\n                [\n                  -105.89232639036776,\n                  37.40451813873655\n                ],\n                [\n                  -105.89231774181609,\n                  37.404578437395045\n                ],\n                [\n                  -105.89230776981549,\n                  37.40463860696886\n                ],\n                [\n                  -105.89229647740349,\n                  37.40469862912977\n                ],\n                [\n                  -105.8922838680199,\n                  37.40475848559443\n                ],\n                [\n                  -105.89226994550566,\n                  37.404818158129984\n                ],\n                [\n                  -105.89225471410168,\n                  37.4048776285596\n                ],\n                [\n                  -105.89223817844761,\n                  37.40493687876802\n                ],\n                [\n                  -105.89222034358036,\n                  37.40499589070704\n                ],\n                [\n                  -105.89220121493261,\n                  37.40505464640107\n                ],\n                [\n                  -105.89218079833114,\n                  37.40511312795253\n                ],\n                [\n                  -105.89215909999503,\n                  37.4051713175474\n                ],\n                [\n                  -105.8921361265338,\n                  37.40522919746055\n                ],\n                [\n                  -105.89211188494541,\n                  37.4052867500612\n                ],\n                [\n                  -105.89208638261407,\n                  37.405343957818275\n                ],\n                [\n                  -105.89205962730803,\n                  37.40540080330574\n                ],\n                [\n                  -105.89203162717722,\n                  37.40545726920789\n                ],\n                [\n                  -105.89200239075076,\n                  37.405513338324695\n                ],\n                [\n                  -105.89197192693433,\n                  37.405568993576935\n                ],\n                [\n                  -105.89194024500753,\n                  37.40562421801149\n                ],\n                [\n                  -105.89190735462095,\n                  37.40567899480646\n                ],\n                [\n                  -105.89187326579336,\n                  37.4057333072763\n                ],\n                [\n                  -105.89183798890852,\n                  37.40578713887691\n                ],\n                [\n                  -105.89180153471212,\n                  37.40584047321066\n                ],\n                [\n                  -105.89176391430844,\n                  37.4058932940314\n                ],\n                [\n                  -105.89172513915705,\n                  37.40594558524939\n                ],\n                [\n                  -105.89168522106921,\n                  37.40599733093622\n                ],\n                [\n                  -105.89164417220438,\n                  37.40604851532966\n                ],\n                [\n                  -105.89160200506643,\n                  37.40609912283844\n                ],\n                [\n                  -105.89155873249989,\n                  37.40614913804703\n                ],\n                [\n                  -105.89151436768599,\n                  37.4061985457203\n                ],\n                [\n                  -105.89146892413868,\n                  37.406247330808206\n                ],\n                [\n                  -105.8914224157005,\n                  37.40629547845033\n                ],\n                [\n                  -105.89137485653839,\n                  37.406342973980436\n                ],\n                [\n                  -105.89132626113933,\n                  37.40638980293093\n                ],\n                [\n                  -105.89127664430593,\n                  37.40643595103726\n                ],\n                [\n                  -105.89122602115198,\n                  37.40648140424226\n                ],\n                [\n                  -105.89117440709776,\n                  37.406526148700436\n                ],\n                [\n                  -105.89112181786544,\n                  37.40657017078222\n                ],\n                [\n                  -105.89106826947419,\n                  37.40661345707802\n                ],\n                [\n                  -105.89101377823536,\n                  37.40665599440245\n                ],\n                [\n                  -105.89095836074753,\n                  37.40669776979821\n                ],\n                [\n                  -105.8909020338914,\n                  37.40673877054011\n                ],\n                [\n                  -105.89084481482466,\n                  37.406778984138924\n                ],\n                [\n                  -105.8907867209768,\n                  37.40681839834521\n                ],\n                [\n                  -105.89072777004378,\n                  37.40685700115301\n                ],\n                [\n                  -105.89066797998262,\n                  37.40689478080354\n                ],\n                [\n                  -105.89060736900595,\n                  37.40693172578875\n                ],\n                [\n                  -105.89054595557646,\n                  37.40696782485484\n                ],\n                [\n                  -105.89048375840127,\n                  37.40700306700569\n                ],\n                [\n                  -105.89042079642624,\n                  37.40703744150619\n                ],\n                [\n                  -105.89035708883021,\n                  37.407070937885535\n                ],\n                [\n                  -105.89029265501914,\n                  37.407103545940416\n                ],\n                [\n                  -105.89022751462016,\n                  37.40713525573809\n                ],\n                [\n                  -105.8901616874757,\n                  37.40716605761945\n                ],\n                [\n                  -105.89009519363732,\n                  37.407195942201945\n                ],\n                [\n                  -105.8900280533597,\n                  37.407224900382445\n                ],\n                [\n                  -105.88996028709442,\n                  37.407252923339996\n                ],\n                [\n                  -105.88989191548374,\n                  37.40728000253855\n                ],\n                [\n                  -105.8898229593543,\n                  37.40730612972951\n                ],\n                [\n                  -105.88975343971084,\n                  37.40733129695428\n                ],\n                [\n                  -105.88968337772968,\n                  37.407355496546685\n                ],\n                [\n                  -105.88961279475241,\n                  37.407378721135295\n                ],\n                [\n                  -105.88954171227925,\n                  37.40740096364567\n                ],\n                [\n                  -105.88947015196264,\n                  37.40742221730253\n                ],\n                [\n                  -105.88939813560054,\n                  37.407442475631804\n                ],\n                [\n                  -105.88932568512983,\n                  37.40746173246261\n                ],\n                [\n                  -105.88925282261962,\n                  37.40747998192912\n                ],\n                [\n                  -105.88917957026455,\n                  37.407497218472386\n                ],\n                [\n                  -105.88910595037798,\n                  37.40751343684199\n                ],\n                [\n                  -105.88903198538524,\n                  37.40752863209764\n                ],\n                [\n                  -105.8889576978168,\n                  37.40754279961073\n                ],\n                [\n                  -105.88888311030136,\n                  37.4075559350657\n                ],\n                [\n                  -105.88880824555902,\n                  37.407568034461356\n                ],\n                [\n                  -105.88873312639429,\n                  37.4075790941121\n                ],\n                [\n                  -105.88865777568917,\n                  37.40758911064907\n                ],\n                [\n                  -105.88858221639626,\n                  37.40759808102112\n                ],\n                [\n                  -105.88850647153163,\n                  37.40760600249579\n                ],\n                [\n                  -105.88843056416789,\n                  37.407612872660124\n                ],\n                [\n                  -105.88835451742719,\n                  37.407618689421405\n                ],\n                [\n                  -105.88827835447407,\n                  37.40762345100779\n                ],\n                [\n                  -105.88820209850851,\n                  37.407627155968854\n                ],\n                [\n                  -105.88812577275884,\n                  37.40762980317602\n                ],\n                [\n                  -105.88804940047461,\n                  37.40763139182294\n                ],\n                [\n                  -105.88797300491954,\n                  37.40763192142569\n                ],\n                [\n                  -105.88789660936447,\n                  37.40763139182294\n                ],\n                [\n                  -105.88782023708025,\n                  37.40762980317602\n                ],\n                [\n                  -105.88774391133057,\n                  37.407627155968854\n                ],\n                [\n                  -105.88766765536502,\n                  37.40762345100779\n                ],\n                [\n                  -105.8875914924119,\n                  37.407618689421405\n                ],\n                [\n                  -105.8875154456712,\n                  37.407612872660124\n                ],\n                [\n                  -105.88743953830746,\n                  37.40760600249579\n                ],\n                [\n                  -105.88736379344283,\n                  37.40759808102112\n                ],\n                [\n                  -105.88728823414992,\n                  37.40758911064907\n                ],\n                [\n                  -105.8872128834448,\n                  37.4075790941121\n                ],\n                [\n                  -105.88713776428007,\n                  37.407568034461356\n                ],\n                [\n                  -105.88706289953772,\n                  37.4075559350657\n                ],\n                [\n                  -105.88698831202228,\n                  37.40754279961073\n                ],\n                [\n                  -105.88691402445384,\n                  37.40752863209764\n                ],\n                [\n                  -105.88684005946111,\n                  37.40751343684199\n                ],\n                [\n                  -105.88676643957454,\n                  37.407497218472386\n                ],\n                [\n                  -105.88669318721946,\n                  37.40747998192912\n                ],\n                [\n                  -105.88662032470926,\n                  37.40746173246261\n                ],\n                [\n                  -105.88654787423854,\n                  37.407442475631804\n                ],\n                [\n                  -105.88647585787645,\n                  37.40742221730253\n                ],\n                [\n                  -105.88640429755984,\n                  37.40740096364567\n                ],\n                [\n                  -105.88633321508668,\n                  37.407378721135295\n                ],\n                [\n                  -105.8862626321094,\n                  37.407355496546685\n                ],\n                [\n                  -105.88619257012824,\n                  37.40733129695428\n                ],\n                [\n                  -105.88612305048478,\n                  37.40730612972951\n                ],\n                [\n                  -105.88605409435534,\n                  37.40728000253855\n                ],\n                [\n                  -105.88598572274466,\n                  37.407252923339996\n                ],\n                [\n                  -105.88591795647939,\n                  37.407224900382445\n                ],\n                [\n                  -105.88585081620177,\n                  37.407195942201945\n                ],\n                [\n                  -105.88578432236339,\n                  37.40716605761945\n                ],\n                [\n                  -105.88571849521892,\n                  37.40713525573809\n                ],\n                [\n                  -105.88565335481995,\n                  37.407103545940416\n                ],\n                [\n                  -105.88558892100887,\n                  37.407070937885535\n                ],\n                [\n                  -105.88552521341285,\n                  37.40703744150619\n                ],\n                [\n                  -105.88546225143781,\n                  37.40700306700569\n                ],\n                [\n                  -105.88540005426263,\n                  37.40696782485484\n                ],\n                [\n                  -105.88533864083314,\n                  37.40693172578875\n                ],\n                [\n                  -105.88527802985647,\n                  37.40689478080354\n                ],\n                [\n                  -105.88521823979531,\n                  37.40685700115301\n                ],\n                [\n                  -105.88515928886228,\n                  37.40681839834521\n                ],\n                [\n                  -105.88510119501443,\n                  37.406778984138924\n                ],\n                [\n                  -105.8850439759477,\n                  37.40673877054011\n                ],\n                [\n                  -105.88498764909156,\n                  37.40669776979821\n                ],\n                [\n                  -105.88493223160373,\n                  37.40665599440245\n                ],\n                [\n                  -105.8848777403649,\n                  37.40661345707802\n                ],\n                [\n                  -105.88482419197365,\n                  37.40657017078222\n                ],\n                [\n                  -105.88477160274132,\n                  37.406526148700436\n                ],\n                [\n                  -105.88471998868711,\n                  37.40648140424226\n                ],\n                [\n                  -105.88466936553316,\n                  37.40643595103726\n                ],\n                [\n                  -105.88461974869976,\n                  37.40638980293093\n                ],\n                [\n                  -105.8845711533007,\n                  37.406342973980436\n                ],\n                [\n                  -105.88452359413859,\n                  37.40629547845033\n                ],\n                [\n                  -105.88447708570041,\n                  37.406247330808206\n                ],\n                [\n                  -105.8844316421531,\n                  37.4061985457203\n                ],\n                [\n                  -105.8843872773392,\n                  37.40614913804703\n                ],\n                [\n                  -105.88434400477266,\n                  37.40609912283844\n                ],\n                [\n                  -105.88430183763471,\n                  37.40604851532966\n                ],\n                [\n                  -105.88426078876988,\n                  37.40599733093622\n                ],\n                [\n                  -105.88422087068204,\n                  37.40594558524939\n                ],\n                [\n                  -105.88418209553065,\n                  37.4058932940314\n                ],\n                [\n                  -105.88414447512697,\n                  37.40584047321066\n                ],\n                [\n                  -105.88410802093057,\n                  37.40578713887691\n                ],\n                [\n                  -105.88407274404572,\n                  37.4057333072763\n                ],\n                [\n                  -105.88403865521813,\n                  37.40567899480646\n                ],\n                [\n                  -105.88400576483156,\n                  37.40562421801149\n                ],\n                [\n                  -105.88397408290476,\n                  37.405568993576935\n                ],\n                [\n                  -105.88394361908833,\n                  37.405513338324695\n                ],\n                [\n                  -105.88391438266187,\n                  37.40545726920789\n                ],\n                [\n                  -105.88388638253106,\n                  37.40540080330574\n                ],\n                [\n                  -105.88385962722502,\n                  37.405343957818275\n                ],\n                [\n                  -105.88383412489368,\n                  37.4052867500612\n                ],\n                [\n                  -105.88380988330529,\n                  37.40522919746055\n                ],\n                [\n                  -105.88378690984406,\n                  37.4051713175474\n                ],\n                [\n                  -105.88376521150795,\n                  37.40511312795253\n                ],\n                [\n                  -105.88374479490648,\n                  37.40505464640107\n                ],\n                [\n                  -105.88372566625873,\n                  37.40499589070704\n                ],\n                [\n                  -105.88370783139148,\n                  37.40493687876802\n                ],\n                [\n                  -105.8836912957374,\n                  37.4048776285596\n                ],\n                [\n                  -105.88367606433343,\n                  37.404818158129984\n                ],\n                [\n                  -105.88366214181919,\n                  37.40475848559443\n                ],\n                [\n                  -105.8836495324356,\n                  37.40469862912977\n                ],\n                [\n                  -105.8836382400236,\n                  37.40463860696886\n                ],\n                [\n                  -105.883628268023,\n                  37.404578437395045\n                ],\n                [\n                  -105.88361961947133,\n                  37.40451813873655\n                ],\n                [\n                  -105.88361229700305,\n                  37.40445772936093\n                ],\n                [\n                  -105.88360630284865,\n                  37.40439722766947\n                ],\n                [\n                  -105.883601638834,\n                  37.404336652091565\n                ],\n                [\n                  -105.8835983063798,\n                  37.404276021079134\n                ],\n                [\n                  -105.88359630650115,\n                  37.404215353100966\n                ],\n                [\n                  -105.88359563980724,\n                  37.404154666637105\n                ]\n              ]\n            ]\n          ]\n        },\n        \"properties\": {},\n        \"type\": \"Feature\"\n      }\n    ],\n    \"type\": \"FeatureCollection\"\n  },\n  \"lineStringGeoJson\": {\n    \"type\": \"FeatureCollection\",\n    \"features\": [\n      {\n        \"geometry\": {\n          \"type\": \"LineString\",\n          \"coordinates\": [\n            [\n              [\n                                    34.8669291,\n                                    32.2835288\n                                ],\n                                [\n                                    34.8628092,\n                                    32.270394\n                                ],\n                                [\n                                    34.8531532,\n                                    32.2727526\n                                ],\n                                [\n                                    34.8577881,\n                                    32.2841093\n                                ],\n                                 [\n                                    34.8669291,\n                                    32.2835288\n                                ]\n            ]\n          ]\n        },\n        \"type\": \"Feature\"\n      }\n    ]\n  }\n}"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/*/manual-zoning?noIrrigationPivot=true",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								"*",
+								"manual-zoning"
+							],
+							"query": [
+								{
+									"key": "noIrrigationPivot",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post fields",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "13fe5764-8a5b-44f8-b3e0-a815a7230688",
+								"exec": [
+									"  postman.setEnvironmentVariable(\"fieldId\")"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "df0516a7-91d8-4fc0-9cc8-835baabf9d57",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 650ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(650);",
+									"});",
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(201);",
+									"",
+									"    postman.setEnvironmentVariable(\"fieldId\", jsonData.content.fieldId);",
+									"});  ",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "soilZonescoordinates0",
+								"value": "{{soilZonescoordinates0}}",
+								"type": "text"
+							},
+							{
+								"key": "soilZonescoordinates1",
+								"value": "{{soilZonescoordinates1}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"soilZonesGeoJson\": {\n        \"type\": \"FeatureCollection\",\n        \"features\": [\n            {\n                \"geometry\": {\n                    \"type\": \"MultiPolygon\",\n                    \"coordinates\": {{soilZonescoordinates0}}\n                },\n                \"type\": \"Feature\",\n                \"properties\": {\n                    \"mukey\": null\n                }\n            },\n            {\n                \"geometry\": {\n                    \"type\": \"MultiPolygon\",\n                    \"coordinates\": {{soilZonescoordinates1}}\n                },\n                \"type\": \"Feature\",\n                \"properties\": {\n                    \"mukey\": null\n                }\n            }\n        ]\n    },\n    \"cropZonesGeoJson\": {\n        \"type\": \"FeatureCollection\",\n        \"features\": [\n            {\n                \"geometry\": {\n                    \"type\": \"MultiPolygon\",\n                    \"coordinates\": {{cropZonesGeoJson0}}\n                },\n                \"type\": \"Feature\",\n                \"properties\": {\n                    \"cropId\": 2,\n                    \"plantingDate\": 0,\n                    \"emergenceDate\": 0,\n                    \"center\": [\n                        34.85824472392706,\n                        32.27800012267532\n                    ],\n                    \"userGrowthToMaturity\": 0,\n                    \"userCropVariety\": null\n                }\n            },\n            {\n                \"geometry\": {\n                    \"type\": \"MultiPolygon\",\n                    \"coordinates\": {{cropZonesGeoJson1}}\n                },\n                \"type\": \"Feature\",\n                \"properties\": {\n                    \"cropId\": 3,\n                    \"plantingDate\": 0,\n                    \"emergenceDate\": 0,\n                    \"center\": [\n                        34.86282577079935,\n                        32.276988859144176\n                    ],\n                    \"userGrowthToMaturity\": 0,\n                    \"userCropVariety\": null\n                }\n            }\n        ]\n    },\n    \"geoJsonBoundary\": {\n        \"type\": \"Polygon\",\n        \"coordinates\": [\n            [\n                [\n                    34.8669291,\n                    32.2835288\n                ],\n                [\n                    34.8628092,\n                    32.270394\n                ],\n                [\n                    34.8531532,\n                    32.2727526\n                ],\n                [\n                    34.8577881,\n                    32.2841093\n                ],\n                [\n                    34.8669291,\n                    32.2835288\n                ]\n            ]\n        ]\n    },\n    \"fieldShape\": \"Polygon\",\n    \"fieldName\": \"ZoningField\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/?farmId={{farmId}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								""
+							],
+							"query": [
+								{
+									"key": "farmId",
+									"value": "{{farmId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "overlapping Field Test",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "13fe5764-8a5b-44f8-b3e0-a815a7230688",
+								"exec": [
+									"  postman.setEnvironmentVariable(\"fieldId\")"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "df0516a7-91d8-4fc0-9cc8-835baabf9d57",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 600ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(600);",
+									"});",
+									"pm.test(\"overlapping field create message checking\", function() {",
+									"    pm.expect(jsonData.message).to.equal(\"Field boundary is overlapping other fields in this farm: New Farm\");",
+									"});",
+									"",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"soilZonesGeoJson\": {\n        \"type\": \"FeatureCollection\",\n        \"features\": [\n            {\n                \"geometry\": {\n                    \"type\": \"MultiPolygon\",\n                    \"coordinates\": [\n                        [\n                            [\n                                [\n                                    34.85847810884462,\n                                    32.27145192373645\n                                ],\n                                [\n                                    34.8531532,\n                                    32.2727526\n                                ],\n                                [\n                                    34.8577881,\n                                    32.2841093\n                                ],\n                                [\n                                    34.86343240152507,\n                                    32.28375085814076\n                                ],\n                                [\n                                    34.85847810884462,\n                                    32.27145192373645\n                                ]\n                            ]\n                        ]\n                    ]\n                },\n                \"type\": \"Feature\",\n                \"properties\": {\n                    \"mukey\": null\n                }\n            },\n            {\n                \"geometry\": {\n                    \"type\": \"MultiPolygon\",\n                    \"coordinates\": [\n                        [\n                            [\n                                [\n                                    34.85847810884462,\n                                    32.27145192373645\n                                ],\n                                [\n                                    34.86343240152507,\n                                    32.28375085814076\n                                ],\n                                [\n                                    34.8669291,\n                                    32.2835288\n                                ],\n                                [\n                                    34.8628092,\n                                    32.27039400000001\n                                ],\n                                [\n                                    34.85847810884462,\n                                    32.27145192373645\n                                ]\n                            ]\n                        ]\n                    ]\n                },\n                \"type\": \"Feature\",\n                \"properties\": {\n                    \"mukey\": null\n                }\n            }\n        ]\n    },\n    \"cropZonesGeoJson\": {\n        \"type\": \"FeatureCollection\",\n        \"features\": [\n            {\n                \"geometry\": {\n                    \"type\": \"MultiPolygon\",\n                    \"coordinates\": [\n                        [\n                            [\n                                [\n                                    34.85847810884462,\n                                    32.27145192373645\n                                ],\n                                [\n                                    34.8531532,\n                                    32.2727526\n                                ],\n                                [\n                                    34.8577881,\n                                    32.2841093\n                                ],\n                                [\n                                    34.86343240152507,\n                                    32.28375085814076\n                                ],\n                                [\n                                    34.85847810884462,\n                                    32.27145192373645\n                                ]\n                            ]\n                        ]\n                    ]\n                },\n                \"type\": \"Feature\",\n                \"properties\": {\n                    \"cropId\": 2,\n                    \"plantingDate\": 0,\n                    \"emergenceDate\": 0,\n                    \"center\": [\n                        34.85824472392706,\n                        32.27800012267532\n                    ],\n                    \"userGrowthToMaturity\": 0,\n                    \"userCropVariety\": null\n                }\n            },\n            {\n                \"geometry\": {\n                    \"type\": \"MultiPolygon\",\n                    \"coordinates\": [\n                        [\n                            [\n                                [\n                                    34.86343240152507,\n                                    32.28375085814076\n                                ],\n                                [\n                                    34.8669291,\n                                    32.2835288\n                                ],\n                                [\n                                    34.8628092,\n                                    32.27039400000001\n                                ],\n                                [\n                                    34.85847810884462,\n                                    32.27145192373645\n                                ],\n                                [\n                                    34.86343240152507,\n                                    32.28375085814076\n                                ]\n                            ]\n                        ]\n                    ]\n                },\n                \"type\": \"Feature\",\n                \"properties\": {\n                    \"cropId\": 3,\n                    \"plantingDate\": 0,\n                    \"emergenceDate\": 0,\n                    \"center\": [\n                        34.86282577079935,\n                        32.276988859144176\n                    ],\n                    \"userGrowthToMaturity\": 0,\n                    \"userCropVariety\": null\n                }\n            }\n        ]\n    },\n    \"geoJsonBoundary\": {\n        \"type\": \"Polygon\",\n        \"coordinates\": [\n            [\n                [\n                    34.8669291,\n                    32.2835288\n                ],\n                [\n                    34.8628092,\n                    32.270394\n                ],\n                [\n                    34.8531532,\n                    32.2727526\n                ],\n                [\n                    34.8577881,\n                    32.2841093\n                ],\n                [\n                    34.8669291,\n                    32.2835288\n                ]\n            ]\n        ]\n    },\n    \"fieldShape\": \"Polygon\",\n    \"fieldName\": \"ZoningField\"\n}"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/?farmId={{farmId}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								""
+							],
+							"query": [
+								{
+									"key": "farmId",
+									"value": "{{farmId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get field centers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b6eaa942-c0c5-4068-9b24-1352cc4bb9f1",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 450ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(450);",
+									"});",
+									"postman.setEnvironmentVariable(\"fieldId\", jsonData.content[0].fields[0].fieldId);",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "b23afbb7-814a-4055-b0ea-16aa18ef94ad",
+								"exec": [
+									"postman.clearEnvironmentVariable(\"fieldId\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/centers",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								"centers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Field Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0077925a-a34d-4007-9cc2-c9227f65ae4b",
+								"exec": [
+									"pm.test(\"Response time is less than 450ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(450);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/{{fieldId}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								"{{fieldId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get farms",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "54ca7b68-55af-4f5a-aa7f-5aa64b3efe91",
+								"exec": [
+									"postman.setEnvironmentVariable(\"farmId\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d1039904-878f-4e78-8588-e7454bd3f69c",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 450ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(450);",
+									"});",
+									"postman.setEnvironmentVariable(\"farmId\", jsonData.content[0].id);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.cropx.info/api/farms/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"farms",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Farm Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d3c3cbee-2435-4eaf-b4d3-e8d93608bca1",
+								"exec": [
+									"pm.test(\"Response time is less than 450ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(450);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/farms/{{farmId}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"farms",
+								"{{farmId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get farms",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "54ca7b68-55af-4f5a-aa7f-5aa64b3efe91",
+								"exec": [
+									"postman.setEnvironmentVariable(\"farmId\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d1039904-878f-4e78-8588-e7454bd3f69c",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"postman.setEnvironmentVariable(\"farmId\", jsonData.content[0].id);",
+									"pm.test(\"Response time is less than 450ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(450);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.cropx.info/api/farms/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"farms",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Farm Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bb464c35-b4d7-4247-b202-d87da30b5ba7",
+								"exec": [
+									"pm.test(\"Response time is less than 450ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(450);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/farms/{{farmId}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"farms",
+								"{{farmId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "farm Transfer Copy",
+			"item": [
+				{
+					"name": "Sign in",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "fd972f33-fb00-47fa-bf96-00c718d22840",
+								"exec": [
+									"postman.clearEnvironmentVariable(\"token\");",
+									"postman.clearEnvironmentVariable(\"userId\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "51cd92d8-2eda-4dee-af67-a275fe1261a3",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 350ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(350);",
+									"});",
+									"postman.setEnvironmentVariable(\"token\", jsonData.content.token);",
+									"postman.setEnvironmentVariable(\"userId\", jsonData.content.userId);",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"ydcropx@gmail.com@x\",\n  \"password\": \"Syd12061986\"\n}\n"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/user/login",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get fields",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "54ca7b68-55af-4f5a-aa7f-5aa64b3efe91",
+								"exec": [
+									"postman.setEnvironmentVariable(\"farmId\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d1039904-878f-4e78-8588-e7454bd3f69c",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 450ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(450);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Check if array is empty\", function() {",
+									"    pm.expect(jsonData.content).to.be.empty;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/centers",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								"centers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign in",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "fd972f33-fb00-47fa-bf96-00c718d22840",
+								"exec": [
+									"postman.clearEnvironmentVariable(\"token\");",
+									"postman.clearEnvironmentVariable(\"userId\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "51cd92d8-2eda-4dee-af67-a275fe1261a3",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"postman.setEnvironmentVariable(\"token\", jsonData.content.token);",
+									"postman.setEnvironmentVariable(\"userId\", jsonData.content.userId);",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"uzi.cohen@cropx.com@x\",\n  \"password\": \"Ddemo1234\"\n}\n"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/user/login",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "patch permissions transfer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "81c98c2e-78ab-41b4-b435-9df0fe3d4cb5",
+								"exec": [
+									"pm.test(\"Response time is less than 1700ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1700);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"permissions\": [\r\n    {\r\n      \"clazz\": \"Field\",\r\n      \"id\":5871,\r\n      \"permissions\": 1152,\r\n      \"username\": \"ydcropx@gmail.com@x\"\r\n    }\r\n  ]\r\n}"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/user/permissions",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"user",
+								"permissions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign in",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "fd972f33-fb00-47fa-bf96-00c718d22840",
+								"exec": [
+									"postman.clearEnvironmentVariable(\"token\");",
+									"postman.clearEnvironmentVariable(\"userId\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "51cd92d8-2eda-4dee-af67-a275fe1261a3",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 450ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(450);",
+									"});",
+									"postman.setEnvironmentVariable(\"token\", jsonData.content.token);",
+									"postman.setEnvironmentVariable(\"userId\", jsonData.content.userId);",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"ydcropx@gmail.com@x\",\n  \"password\": \"Syd12061986\"\n}\n"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/user/login",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get fields",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "54ca7b68-55af-4f5a-aa7f-5aa64b3efe91",
+								"exec": [
+									"postman.setEnvironmentVariable(\"farmId\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d1039904-878f-4e78-8588-e7454bd3f69c",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Check if array is notempty\", function() {",
+									"    pm.expect(jsonData.content).to.be.not.empty;",
+									"",
+									"    ",
+									"pm.test(\"Field name checking\", function() {",
+									" pm.expect(jsonData.content[0].fields[0].fieldName).to.equal(\"Grapefruit - Adaptive Irrigation\");",
+									"});",
+									"    ",
+									"    ",
+									"    ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/centers",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								"centers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign in",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "fd972f33-fb00-47fa-bf96-00c718d22840",
+								"exec": [
+									"postman.clearEnvironmentVariable(\"token\");",
+									"postman.clearEnvironmentVariable(\"userId\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "51cd92d8-2eda-4dee-af67-a275fe1261a3",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 450ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(450);",
+									"});",
+									"postman.setEnvironmentVariable(\"token\", jsonData.content.token);",
+									"postman.setEnvironmentVariable(\"userId\", jsonData.content.userId);",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"uzi.cohen@cropx.com@x\",\n  \"password\": \"Ddemo1234\"\n}\n"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/user/login",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "patch permissions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "368ff9a9-8b66-4303-8359-052d963dc789",
+								"exec": [
+									"pm.test(\"Response time is less than 1700ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1700);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"permissions\": [\r\n    {\r\n      \"clazz\": \"Field\",\r\n      \"id\":5871,\r\n      \"permissions\": 0,\r\n      \"username\": \"ydcropx@gmail.com@x\"\r\n    }\r\n  ]\r\n}"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/user/permissions",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"user",
+								"permissions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign in",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "fd972f33-fb00-47fa-bf96-00c718d22840",
+								"exec": [
+									"postman.clearEnvironmentVariable(\"token\");",
+									"postman.clearEnvironmentVariable(\"userId\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "51cd92d8-2eda-4dee-af67-a275fe1261a3",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 400ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);",
+									"});",
+									"postman.setEnvironmentVariable(\"token\", jsonData.content.token);",
+									"postman.setEnvironmentVariable(\"userId\", jsonData.content.userId);",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"ydcropx@gmail.com@x\",\n  \"password\": \"Syd12061986\"\n}\n"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/user/login",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get fields",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "54ca7b68-55af-4f5a-aa7f-5aa64b3efe91",
+								"exec": [
+									"postman.setEnvironmentVariable(\"farmId\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d1039904-878f-4e78-8588-e7454bd3f69c",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 450ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(450);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Check if array is empty\", function() {",
+									"    pm.expect(jsonData.content).to.be.empty;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/centers",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								"centers"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f7a7454c-f286-4d79-9c1e-99a37d7ee4ee",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "3cd5b2a0-19aa-4e29-9586-972cbcc4e4f9",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Soils Copy",
+			"item": [
+				{
+					"name": "Sign in- Correct values",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "fd972f33-fb00-47fa-bf96-00c718d22840",
+								"exec": [
+									"postman.clearEnvironmentVariable(\"token\");",
+									"postman.clearEnvironmentVariable(\"userId\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "51cd92d8-2eda-4dee-af67-a275fe1261a3",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 1100ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1100);",
+									"});",
+									"",
+									"postman.setEnvironmentVariable(\"token\", jsonData.content.token);",
+									"postman.setEnvironmentVariable(\"userId\", jsonData.content.userId);",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"ydcropx@gmail.com@x\",\n  \"password\": \"Syd12061986\"\n}\n"
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/user/login",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add farm",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "55b8a451-6d94-45fe-8b36-dd04e35881dc",
+								"exec": [
+									"postman.clearEnvironmentVariable(\"farmId\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "6678875f-9bba-4a9e-a179-d108b58f33ee",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"postman.setEnvironmentVariable(\"farmId\", jsonData.content.id);",
+									"",
+									"pm.test(\"Farm name\", function() {",
+									"    pm.expect(jsonData.content.name).to.equal(\"\\\"YehoFarm\\\"\");",
+									"});",
+									"",
+									"pm.test(\"name\", function() {",
+									"    pm.expect(jsonData.content.account.name).to.equal(\"ydcropx@gmail.com\");",
+									"});",
+									"",
+									"pm.test(\"enabled\", function() {",
+									"    pm.expect(jsonData.content.account.enabled).to.equal(true);",
+									"});",
+									"",
+									"pm.test(\"objectNature\", function() {",
+									"    pm.expect(jsonData.content.account.objectNature).to.equal(\"Account\");",
+									"});",
+									"",
+									"pm.test(\"unassigned\", function() {",
+									"    pm.expect(jsonData.content.unassigned).to.equal(false);",
+									"});",
+									"",
+									"pm.test(\"deleted\", function() {",
+									"    pm.expect(jsonData.content.deleted).to.equal(false);",
+									"});",
+									"",
+									"pm.test(\"objectNature\", function() {",
+									"    pm.expect(jsonData.content.objectNature).to.equal(\"Farm\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\"YehoFarm\""
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/farms/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"farms",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post fields",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "13fe5764-8a5b-44f8-b3e0-a815a7230688",
+								"exec": [
+									"  postman.setEnvironmentVariable(\"fieldId\")"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "df0516a7-91d8-4fc0-9cc8-835baabf9d57",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 7500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(750);",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(201);",
+									"",
+									"    postman.setEnvironmentVariable(\"fieldId\", jsonData.content.fieldId);",
+									"});  ",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "soilZonescoordinates0",
+								"type": "text",
+								"value": "{{soilZonescoordinates0}}"
+							},
+							{
+								"key": "soilZonescoordinates1",
+								"type": "text",
+								"value": "{{soilZonescoordinates1}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"soilZonesGeoJson\": {\n        \"type\": \"FeatureCollection\",\n        \"features\": [\n            {\n                \"geometry\": {\n                    \"type\": \"MultiPolygon\",\n                    \"coordinates\": {{soilZonescoordinates0}}\n                },\n                \"type\": \"Feature\",\n                \"properties\": {\n                    \"mukey\": null\n                }\n            },\n            {\n                \"geometry\": {\n                    \"type\": \"MultiPolygon\",\n                    \"coordinates\": {{soilZonescoordinates1}}\n                },\n                \"type\": \"Feature\",\n                \"properties\": {\n                    \"mukey\": null\n                }\n            }\n        ]\n    },\n    \"cropZonesGeoJson\": {\n        \"type\": \"FeatureCollection\",\n        \"features\": [\n            {\n                \"geometry\": {\n                    \"type\": \"MultiPolygon\",\n                    \"coordinates\": {{cropZonesGeoJson0}}\n                },\n                \"type\": \"Feature\",\n                \"properties\": {\n                    \"cropId\": 2,\n                    \"plantingDate\": 0,\n                    \"emergenceDate\": 0,\n                    \"center\": [\n                        34.85824472392706,\n                        32.27800012267532\n                    ],\n                    \"userGrowthToMaturity\": 0,\n                    \"userCropVariety\": null\n                }\n            },\n            {\n                \"geometry\": {\n                    \"type\": \"MultiPolygon\",\n                    \"coordinates\": {{cropZonesGeoJson1}}\n                },\n                \"type\": \"Feature\",\n                \"properties\": {\n                    \"cropId\": 3,\n                    \"plantingDate\": 0,\n                    \"emergenceDate\": 0,\n                    \"center\": [\n                        34.86282577079935,\n                        32.276988859144176\n                    ],\n                    \"userGrowthToMaturity\": 0,\n                    \"userCropVariety\": null\n                }\n            }\n        ]\n    },\n    \"geoJsonBoundary\": {\n        \"type\": \"Polygon\",\n        \"coordinates\": [\n            [\n                [\n                    34.8669291,\n                    32.2835288\n                ],\n                [\n                    34.8628092,\n                    32.270394\n                ],\n                [\n                    34.8531532,\n                    32.2727526\n                ],\n                [\n                    34.8577881,\n                    32.2841093\n                ],\n                [\n                    34.8669291,\n                    32.2835288\n                ]\n            ]\n        ]\n    },\n    \"fieldShape\": \"Polygon\",\n    \"fieldName\": \"ZoningField\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/?farmId={{farmId}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								""
+							],
+							"query": [
+								{
+									"key": "farmId",
+									"value": "{{farmId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get soils by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "99a0cef3-cf9f-4393-9322-f03d89b70f1d",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 550ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(550);",
+									"});",
+									"postman.setEnvironmentVariable(\"soilZoneId\", jsonData.content[0].zoneData.id);",
+									"",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "55d498a9-ef8f-4f91-a1c9-1844b9603fb7",
+								"exec": [
+									"postman.setEnvironmentVariable(\"soilZoneId\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/{{fieldId}}/soils",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								"{{fieldId}}",
+								"soils"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Available soils layers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "63cb4c3b-08f2-4334-9681-397643fed815",
+								"exec": [
+									"pm.test(\"Response time is less than 400ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.cropx.info/api/soils/{{soilZoneId}}/available-layers",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"soils",
+								"{{soilZoneId}}",
+								"available-layers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get soils by id measurments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f8185212-82fd-4d08-93b6-9f31b4392efc",
+								"exec": [
+									"pm.test(\"Response time is less than 400ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(450);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.cropx.info/api/soils/{{soilZoneId}}/layers?sourceType=Manual",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"soils",
+								"{{soilZoneId}}",
+								"layers"
+							],
+							"query": [
+								{
+									"key": "sourceType",
+									"value": "Manual"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit soil layer properties for soil",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c8baa1e7-3dfc-4570-9d50-63b980b2f566",
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n{\n  \"layerSourceType\": {\n    \"description\": \"Composite\",\n    \"id\": 2\n  },\n  \"layers\": [\n    {\n      \n      \"soilZone\": {{soilZoneId}},\n      \"fromDepth\": 0,\n      \"sourceType\": {\n        \"id\": 3,\n        \"description\": \"Manual\",\n        \"objectNature\": \"SourceType\"\n      },\n      \"soilTexture\": {\n        \"id\": 5,\n        \"description\": \"SiltLoam\",\n        \"additionals\": {\n          \"clay\": 0.180107336956522,\n          \"density\": 1,\n          \"gravels\": 0,\n          \"organic_matter\": 3.04524923913043,\n          \"salinity\": 0,\n          \"sand\": 0.150389945652174\n        }\n      },\n      \"wiltingPoint\": 9,\n      \"fcPoint\": 21,\n      \"awc\": 0.2,\n      \"saturationPoint\": 41.7,\n      \"hydraulicConductivity\": null,\n      \"sandComposite\": 40,\n      \"siltComposite\": 40,\n      \"clayComposite\": 20,\n      \"organicMatter\": null,\n      \"chalk\": null,\n      \"gypsum\": null,\n      \"sodiumAdsorbtionRatio\": null,\n      \"ec\": null,\n      \"cationExchangeCapacity\": null,\n      \"ph\": null,\n      \"activeLayer\": true,\n      \"sturationPoint\": 41.74,\n      \"objectNature\": \"ZoneSoilLayer\",\n      \"isValid\": true,\n      \"isChanged\": false,\n      \"isEditable\": false\n    },\n    {\n      \"fromDepth\": 10,\n      \"fcPoint\": null,\n      \"wiltingPoint\": null,\n      \"clayComposite\": 25,\n      \"sandComposite\": 25,\n      \"siltComposite\": 50,\n      \"organicMatter\": null,\n      \"isValid\": true,\n      \"isEditable\": true,\n      \"isChanged\": true\n    }\n  ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/soils/{{soilZoneId}}/layers",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"soils",
+								"{{soilZoneId}}",
+								"layers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get soils by id measurments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "07195b85-bea6-4fae-b68c-b7bf66040875",
+								"exec": [
+									"pm.test(\"Response time is less than 1100ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1100);",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.cropx.info/api/soils/{{soilZoneId}}/layers?sourceType=Manual",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"soils",
+								"{{soilZoneId}}",
+								"layers"
+							],
+							"query": [
+								{
+									"key": "sourceType",
+									"value": "Manual"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Field Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "85b2710a-a328-463e-934a-36725e5c7414",
+								"exec": [
+									"pm.test(\"Response time is less than 550ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(550);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/fields/{{fieldId}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"fields",
+								"{{fieldId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Farm Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6618a384-b115-4d23-9ead-9357ff845980",
+								"exec": [
+									"pm.test(\"Response time is less than 480ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(480);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/farms/{{farmId}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"farms",
+								"{{farmId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get farms",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "54ca7b68-55af-4f5a-aa7f-5aa64b3efe91",
+								"exec": [
+									"postman.setEnvironmentVariable(\"farmId\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d1039904-878f-4e78-8588-e7454bd3f69c",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.test(\"Response time is less than 450ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(450);",
+									"});",
+									"postman.setEnvironmentVariable(\"farmId\", jsonData.content[0].id);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.cropx.info/api/farms/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"farms",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Farm Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "759a348d-5de7-4072-bc30-d17f54dea58f",
+								"exec": [
+									"pm.test(\"Response time is less than 400ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(450);",
+									"});",
+									"pm.test(\"Status code is 450\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.cropx.info/api/farms/{{farmId}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cropx",
+								"info"
+							],
+							"path": [
+								"api",
+								"farms",
+								"{{farmId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
